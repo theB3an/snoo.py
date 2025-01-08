@@ -1,19 +1,21 @@
 def get_users_with_spns(ldap_connection, logger):
     logger.open("SPNs.txt")
     try:
-        search_filter = '(&(objectClass=user)(servicePrincipalName=*))'
-        attributes = ['cn', 'servicePrincipalName']
-
-        resp = ldap_connection.search(search_filter, attributes, searchScope=2)
+        resp = ldap_connection.search(searchFilter="(&(objectCategory=person)(servicePrincipalName=*))", attributes=['sAMAccountName', 'servicePrincipalName'])
+        count = 0
 
         if resp:
-            print("[+] Users with SPNs configured:")
             for entry in resp:
-                user = entry['attributes'].get('cn', ['Unknown'])[0]
-                spns = entry['attributes'].get('servicePrincipalName', [])
-                print(f"  - {user}")
-                for spn in spns:
-                    print(f"      SPN: {spn}")
+                if "attributes" in resp:
+                    user = entry['attributes'][0]["vals"][0]
+                    spns = entry['attributes'][1]["vals"]
+                    logger.log(f"  - {user}")
+                    for spn in spns:
+                        logger.log(f"      SPN: {spn}")
+                    count=count+1
+            
+            print(f"[+] Users with SPNs configured: {count}")
+        
         else:
             print("[!] No users with SPNs found.")
     except Exception as e:

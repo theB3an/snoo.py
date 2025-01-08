@@ -1,13 +1,10 @@
 def get_machine_account_quota(ldap_connection, logger):
     logger.open("machine_account_quota.txt")
     try:
-        search_filter = '(objectClass=*)'
-        attributes = ['msDS-MachineAccountQuota']
+        resp = ldap_connection.search(searchFilter="(objectClass=*)", attributes=['ms-DS-MachineAccountQuota'])
 
-        resp = ldap_connection.search(search_filter, attributes, searchScope=0)
-
-        if resp and 'msDS-MachineAccountQuota' in resp[0]['attributes']:
-            quota = resp[0]['attributes']['msDS-MachineAccountQuota'][0]
+        if resp[0]["attributes"]:
+            quota = resp[0]['attributes'][0]["vals"][0]
             print(f"[+] msDS-MachineAccountQuota: {quota}")
             logger.log(f"msDS-MachineAccountQuota: {quota}")
         else:

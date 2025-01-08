@@ -11,7 +11,8 @@ class snoo:
         self.logger = logger
 
     def run(self):
-        ldap_connection = get_ldap_connection(self.domain_controller, self.username, self.password, self.domain, self.logger)
+        print("\n[+] Starting LDAP Connection to Domain Controller...")
+        ldap_connection = get_ldap_connection(self.domain_controller, self.username, self.password, self.domain)
 
         print("\n[+] Querying msDS-MachineAccountQuota...")
         get_machine_account_quota(ldap_connection, self.logger)

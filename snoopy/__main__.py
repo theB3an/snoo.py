@@ -1,11 +1,12 @@
-from snoopy.snoo import snoo
+from snoopy.lib.snoo import snoo
 from snoopy.lib.logger import Logger
 import argparse
 
 def main():
+    banner()
     args = parse_arguments()
-    Logger=Logger(args.output)
-    Snoopy = snoo(args.domain_controller, args.username, args.password, args.domain, Logger)
+    logger=Logger(args.output)
+    Snoopy = snoo(args.domain_controller, args.username, args.password, args.domain, logger)
     Snoopy.run()
 
 def parse_arguments():
@@ -34,5 +35,4 @@ ________  ________   ________  ________  ________  ___    ___
     print(banner)
 
 if __name__ == '__main__':
-    banner()
     main()
