@@ -4,22 +4,18 @@ import socket
 def get_domain_controllers(ldap_connection, logger):
     logger.open("domain_controllers.txt")
     try:
-        search_filter = '(&(objectCategory=computer)(userAccountControl:1.2.840.113556.1.4.803:=8192))'
-        attributes = ['dNSHostName', 'operatingSystem']
-
-        resp = ldap_connection.search(search_filter, attributes, searchScope=2)
+        resp = ldap_connection.search(searchFilter="(&(objectCategory=computer)(userAccountControl:1.2.840.113556.1.4.803:=8192))", attributes=['dNSHostName'])
         results = []
 
-        if resp:
-            for entry in resp:
-                hostname = entry['attributes'].get('dNSHostName', ['Unknown'])[0]
+        for entry in resp:
+            if "attributes" in entry:
+                hostname = entry['attributes'][0]["vals"][0]
                 results.append(hostname)
-            print(f"[+] Found {len(results)} domain controllers")
-            for hostname in results:
-                ip = resolve_hostnames_to_ips([hostname])
-                logger.log(f"{hostname} - {ip}")
-        else:
-            print("[!] No domain controllers found.")
+        print(f"[+] Found {len(results)} domain controllers")
+        for hostname in results:
+            ip = resolve_hostnames_to_ips([hostname])
+            logger.log(f"{ip}")
+
     except Exception as e:
         print(f"[!] Error retrieving domain controllers: {e}")
         return []
