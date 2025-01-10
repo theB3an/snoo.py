@@ -10,6 +10,8 @@ class Logger:
         if not os.path.exists(self.path):
             os.makedirs(self.path)
 
+        print(f"\n[+] Output Directory: {self.path}")
+
     def open(self, file):
         self.file = open(os.path.join(self.path, file), "w+")
 

@@ -1,5 +1,6 @@
 from snoopy.lib.snoo import snoo
 from snoopy.lib.logger import Logger
+from snoopy import __version__
 import argparse
 
 def main():
@@ -19,7 +20,7 @@ def parse_arguments():
     return parser.parse_args()
 
 def banner():
-    banner = '''
+    banner = f'''
 ________  ________   ________  ________  ________  ___    ___ 
 |\   ____\|\   ___  \|\   __  \|\   __  \|\   __  \|\  \  /  /|
 \ \  \___|\ \  \\ \  \ \  \|\  \ \  \|\  \ \  \|\  \ \  \/  / /
@@ -29,7 +30,8 @@ ________  ________   ________  ________  ________  ___    ___
    |\_________\|__| \|__|\|_______|\|_______|\|__||\___/ /     
    \|_________|                                   \|___|/      
                                                                
-                                                               
+                                                v{__version__}               
+                                                
                                                 @theB3an              
 '''
     print(banner)

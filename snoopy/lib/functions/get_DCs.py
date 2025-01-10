@@ -10,7 +10,7 @@ def get_domain_controllers(ldap_connection, logger):
         for entry in resp:
             if "attributes" in entry:
                 hostname = entry['attributes'][0]["vals"][0]
-                results.append(hostname)
+                results.append(str(hostname))
         print(f"[+] Found {len(results)} domain controllers")
         for hostname in results:
             ip = resolve_hostnames_to_ips([hostname])

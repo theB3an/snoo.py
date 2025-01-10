@@ -1,7 +1,7 @@
 def get_users_with_spns(ldap_connection, logger):
     logger.open("SPNs.txt")
     try:
-        resp = ldap_connection.search(searchFilter="(&(objectCategory=person)(servicePrincipalName=*))", attributes=['sAMAccountName', 'servicePrincipalName'])
+        resp = ldap_connection.search(searchFilter="(&(objectCategory=person)(servicePrincipalName=*))", attributes=['sAMAccountName', 'servicePrincipalName', 'memberOf'])
         count = 0
 
         for entry in resp:
@@ -24,7 +24,7 @@ def get_users_with_spns(ldap_connection, logger):
                     logger.log(f"      SPN: {spn}")
                 count=count+1
             
-            print(f"[+] Users with SPNs configured: {count}")
+        print(f"[+] Found {count} kerberoastable accounts")
 
     except Exception as e:
         print(f"[!] Error retrieving users with SPNs: {e}")

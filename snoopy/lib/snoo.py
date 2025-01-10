@@ -1,10 +1,5 @@
 from snoopy.lib.ldap import get_ldap_connection
-from snoopy.lib.get_SPNs import get_users_with_spns
-from snoopy.lib.machine_account_quota import get_machine_account_quota
-from snoopy.lib.get_DCs import get_domain_controllers
-from snoopy.lib.get_DAs import get_domain_administrators
-from snoopy.lib.get_ASREPRoast import get_asrep_roast
-from snoopy.lib.get_PasswordPolicy import get_password_policy
+from snoopy.lib.functions import *
     
 class snoo:
     def __init__(self, domain_controller, username, password, domain, logger):
@@ -27,19 +22,22 @@ class snoo:
         ldap_connection = get_ldap_connection(self.domain_controller, self.username, self.password, self.domain, self.distinguishedName)
 
         print("\n[+] Querying msDS-MachineAccountQuota...")
-        get_machine_account_quota(ldap_connection, self.logger)
+        machine_account_quota.get_machine_account_quota(ldap_connection, self.logger)
 
         print("\n[+] Querying users with SPNs...")
-        get_users_with_spns(ldap_connection, self.logger)
+        get_SPNs.get_users_with_spns(ldap_connection, self.logger)
 
         print("\n[+] Querying for DCs...")
-        get_domain_controllers(ldap_connection, self.logger)
+        get_DCs.get_domain_controllers(ldap_connection, self.logger)
 
         print("\n[+] Querying for Domain Admins...")
-        get_domain_administrators(ldap_connection, self.logger, self.distinguishedName)
+        get_DAs.get_domain_administrators(ldap_connection, self.logger, self.distinguishedName)
 
         print("\n[+] Querying ASREPRoastable Users...")
-        get_asrep_roast(ldap_connection, self.logger)
+        get_ASREPRoast.get_asrep_roast(ldap_connection, self.logger)
 
         print("\n[+] Querying Password Policy...")
-        get_password_policy(ldap_connection, self.logger)
+        get_PasswordPolicy.get_password_policy(ldap_connection, self.logger)
+
+        print("\n[+] Querying Domain Trusts...")
+        get_Trusts.get_domain_trusts(ldap_connection, self.logger)
