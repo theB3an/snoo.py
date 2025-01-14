@@ -22,12 +22,13 @@ Snoopy is an automated AD Recon tool to perform basic information gathering from
 
 Queried information is automatically saved in separate files located in `~/snoopy` by default.
 
-#Installation
+## Installation
 ```
 git clone https://github.com/theB3an/snoo.py.git
 cd snoo.py/
 pip3 install .
 ```
 
-#Usage
+## Usage 
+
 ![alt text](.github/help.png)
