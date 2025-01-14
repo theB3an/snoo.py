@@ -1,7 +1,7 @@
 from impacket.ldap import ldap
 import sys
 
-def get_ldap_connection(domain_controller, username, password, domain, distinguishedName):
+def get_ldap_connection(domain_controller, username, password, distinguishedName, domain):
     try:
         ldap_connection = ldap.LDAPConnection(f'ldap://{domain_controller}', baseDN=distinguishedName)
         ldap_connection.login(username, password, domain)
