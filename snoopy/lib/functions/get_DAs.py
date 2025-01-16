@@ -16,7 +16,7 @@ def get_domain_administrators(ldap_connection, logger, DN):
             if 'attributes' in entry2:
                 user = entry2['attributes'][0]["vals"][0]
 
-                logger.log(f"  - {user}")
+                logger.log(user)
                 count=count+1
 
         print(f"[+] Found {count} administrator accounts")
