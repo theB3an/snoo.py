@@ -6,8 +6,8 @@ import argparse
 def main():
     banner()
     args = parse_arguments()
-    logger=Logger(args.output)
-    Snoopy = snoo(args.domain_controller, args.username, args.password, logger, args.domain, args.All_Users)
+    logger=Logger(args.output, args.verbose)
+    Snoopy = snoo(args.domain_controller, args.username, args.password, logger, args.domain, args.All_Users, args.debug)
     Snoopy.run()
 
 def parse_arguments():
@@ -18,6 +18,8 @@ def parse_arguments():
     parser.add_argument("-d", "--domain", required=False, help="Domain name (e.g. contoso.local)")
     parser.add_argument("-o", "--output", required=False, help="Output directory (default: ~/snoopy)")
     parser.add_argument("-A", "--All-Users", required=False, action='store_true', help="Retrieve list of all enabled users from Active Directory")
+    parser.add_argument("-v", "--verbose", required=False, action='store_true', help="Enable verbose output")
+    parser.add_argument("--debug", required=False, action='store_true', help="Enable debug output")
     return parser.parse_args()
 
 def banner():

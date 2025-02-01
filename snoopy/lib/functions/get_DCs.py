@@ -1,13 +1,16 @@
 import socket
 
 
-def get_domain_controllers(ldap_connection, logger):
+def get_domain_controllers(ldap_connection, logger, debug):
     logger.open("domain_controllers.txt")
     try:
         resp = ldap_connection.search(searchFilter="(&(objectCategory=computer)(userAccountControl:1.2.840.113556.1.4.803:=8192))", attributes=['dNSHostName'])
         results = []
 
         for entry in resp:
+            if debug:
+                print(f"[DEBUG] {entry}")
+                
             if "attributes" in entry:
                 hostname = entry['attributes'][0]["vals"][0]
                 results.append(str(hostname))

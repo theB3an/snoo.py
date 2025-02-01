@@ -1,10 +1,13 @@
-def get_domain_administrators(ldap_connection, logger, DN):
+def get_domain_administrators(ldap_connection, logger, debug):
     logger.open("domain_administrators.txt")
     try:
         resp = ldap_connection.search(searchFilter=f"(&(objectCategory=group)(|(sAMAccountName=Domain Admins)(sAMAccountName=Enterprise Admins)(sAMAccountName=Administrators)))", attributes=['distinguishedName'])
         count = 0
         paths = []
         for entry in resp:
+            if debug:
+                print(f"[DEBUG] {entry}")
+                
             if 'attributes' in entry:
                 paths.append(str(entry['attributes'][0]["vals"][0]))
 

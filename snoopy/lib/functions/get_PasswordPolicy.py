@@ -1,9 +1,12 @@
-def get_password_policy(ldap_connection, logger):
+def get_password_policy(ldap_connection, logger, debug):
     logger.open("passwordpolicy.txt")
     try:
         resp = ldap_connection.search(searchFilter="(objectClass=domainDNS)", attributes=['minPwdLength','pwdProperties', 'lockoutThreshold', 'lockoutDuration', 'pwdHistoryLength'])
 
         for entry in resp:
+            if debug:
+                print(f"[DEBUG] {entry}")
+                
             if "attributes" in entry:
                 for attribute in entry["attributes"]:
                     property = str(attribute["type"])

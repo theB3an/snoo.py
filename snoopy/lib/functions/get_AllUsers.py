@@ -1,10 +1,13 @@
-def get_all_users(ldap_connection, logger):
+def get_all_users(ldap_connection, logger, debug):
     logger.open("AllUsers.txt")
     try:
         resp = ldap_connection.search(searchFilter="(&(objectCategory=user)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))", attributes=['sAMAccountName'])
         count = 0
 
         for entry in resp:
+            if debug:
+                print(f"[DEBUG] {entry}")
+                
             if 'attributes' in entry:
                 user = entry['attributes'][0]["vals"][0]
 

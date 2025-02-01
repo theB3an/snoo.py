@@ -1,10 +1,13 @@
-def get_domain_trusts(ldap_connection, logger):
+def get_domain_trusts(ldap_connection, logger, debug):
     logger.open("trusts.txt")
     try:
         resp = ldap_connection.search(searchFilter="(objectClass=trustedDomain)", attributes=['name','trustType','trustDirection'])
         count=0
 
         for entry in resp:
+            if debug:
+                print(f"[DEBUG] {entry}")
+                
             if 'attributes' in entry:
                 for attribute in entry["attributes"]:
                     property = str(attribute["type"])

@@ -1,10 +1,12 @@
-def get_users_with_spns(ldap_connection, logger):
+def get_users_with_spns(ldap_connection, logger, debug):
     logger.open("SPNs.txt")
     try:
         resp = ldap_connection.search(searchFilter="(&(objectCategory=person)(servicePrincipalName=*))", attributes=['sAMAccountName', 'servicePrincipalName', 'memberOf'])
         count = 0
 
         for entry in resp:
+            if debug:
+                print(f"[DEBUG] {entry}")
             groups=[]
             if "attributes" in entry:
                 for attribute in entry['attributes']:
