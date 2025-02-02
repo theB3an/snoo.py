@@ -20,7 +20,7 @@ class Logger:
     def log(self, message):
         self.file.write(message + "\n")
         if self.verbose:
-            print(f"[INFO] {message} \n")
+            print(f"[INFO] {message}")
 
     def close(self):
         self.file.close()

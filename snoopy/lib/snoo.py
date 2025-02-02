@@ -39,7 +39,7 @@ class snoo:
         get_DCs.get_domain_controllers(ldap_connection, self.logger, self.debug)
 
         print("\n[+] Querying for Domain Admins...")
-        get_DAs.get_domain_administrators(ldap_connection, self.logger, self.distinguishedName, self.debug)
+        get_DAs.get_domain_administrators(ldap_connection, self.logger, self.debug)
 
         print("\n[+] Querying ASRepRoastable Users...")
         get_ASREPRoast.get_asrep_roast(ldap_connection, self.logger, self.debug)
