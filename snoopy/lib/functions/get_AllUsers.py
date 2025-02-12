@@ -11,7 +11,7 @@ def get_all_users(ldap_connection, logger, debug):
             if debug:
                 print(f"[DEBUG] {entry}")
                 
-            if 'attributes' in entry:
+            if 'attributes' in entry and entry['attributes'][0]:
                 user = entry['attributes'][0]["vals"][0]
 
                 logger.log(f"{user}")
